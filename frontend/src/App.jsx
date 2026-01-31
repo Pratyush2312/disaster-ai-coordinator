@@ -1,4 +1,5 @@
 import DisasterMap from "./components/Map/DisasterMap";
+import Landing from "./components/pages/Landing";
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 function App() {
   return (
