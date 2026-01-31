@@ -1,10 +1,13 @@
 import DisasterMap from "./components/Map/DisasterMap";
-
+import { BrowserRouter, Routes, Route } from "react-router-dom"
 function App() {
   return (
-    <div className="h-screen w-screen">
-      <DisasterMap />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Landing />} />
+        <Route path="/dashboard" element={<DisasterMap />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
