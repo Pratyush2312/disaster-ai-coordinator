@@ -10,7 +10,7 @@ import "leaflet/dist/leaflet.css";
 
 import AlertPanel from "../Sidebar/AlertPanel";
 import Legend from "./Legend";
-const URL=import.meta.env.VITE_API_URL
+const URL = import.meta.env.VITE_API_URL
 const colorMap = {
   RED: "red",
   ORANGE: "orange",
@@ -31,12 +31,24 @@ export default function DisasterMap() {
   const [showSidebar, setShowSidebar] = useState(false);
 
   const fetchData = async () => {
-    const res = await fetch(`${URL}/analyze`);
-    const data = await res.json();
-    setZones(data);
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/analyze`);
+      const data = await res.json();
+
+      // 🛡️ Safety check
+      if (Array.isArray(data)) {
+        setZones(data);
+      } else {
+        console.warn("API did not return array:", data);
+        setZones([]);
+      }
+    } catch (err) {
+      console.error("Fetch error:", err);
+      setZones([]);
+    }
   };
 
-  
+
   useEffect(() => {
     fetchData();
     const interval = setInterval(fetchData, 10000);
